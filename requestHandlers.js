@@ -106,8 +106,8 @@ function equacao(request, response) {
 
             if (delta >= 0) {
                 let raizDelta = Math.sqrt(delta)
-                let x1 = (-b + raizDelta) / 2 * a
-                let x2 = (-b - raizDelta) / 2 * a
+                let x1 = (-b + raizDelta) / (2 * a)
+                let x2 = (-b - raizDelta) / (2 * a)
                 response.write("<label>" + "Valor x¹ = " + x1.toFixed(2) + "</label><br/>")
                 response.write("<label>" + "Valor x² = " + x2.toFixed(2) + "</label>")
             } else response.write("Ausentes ou Inválidos")
@@ -119,15 +119,42 @@ function equacao(request, response) {
 function xadrez(request, response) {
     if (request.method == "GET") {
         response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" })
-        response.write("<h2> Xadrez </h2>")
+        response.write("<h2>Xadrez</h2>")
+        response.write("<style type='text/css'>");
+        response.write(" td{ line-height: 70px; text-align:center;}");
+        response.write(".impar {width:70px; height:70px;}");
+        response.write(".par {width:70px; height:70px; background-color: black; }  </style>");
+        response.write("</style>");
+
+        response.write("<table>");
+        for (var i = 1; i <= 8; i++) {
+            response.write("<tr>");
+            for (var j = 0; j < 8; j++) {
+                response.write("<td>");
+                if (i % 2 == 0) {
+                    if (j % 2 == 0) {
+                        response.write("<div class=par></div>");
+                    } else {
+                        response.write("<div class=impar></div>");
+                    }
+                } else {
+                    if (j % 2 == 0) {
+                        response.write("<div class=impar></div>");
+                    } else {
+                        response.write("<div class=par></div>");
+                    }
+                }
+                response.write("</td>");
+            }
+            response.write("</tr>");
+        }
+        response.write("</table>");
+
         response.write("<form method=post>")
-        response.write("<label>Linha: </label><input type=number name=x><br/>")
-        response.write("<label>Coluna: </label><input type=number name=y><br/>")        
+        response.write("<br/><label>Linha: </label><input type=number name=x><br/>")
+        response.write("<label>Coluna: </label><input type=number name=y><br/>")
         response.write("<input type=submit />")
         response.write("</form>")
-
-        response.write("Tabuleiro <br/>")
-
         response.write("<a href='index.html'>Voltar</a> \n")
         response.end()
     }
