@@ -22,10 +22,7 @@ function sobre(request, response) {
     response.end()
 }
 
-function aleatorios(request, response) {
-    response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" })
-    response.write("<h2> Aleatórios </h2>")
-
+function separarAleatoriosParImpar(response) {
     let pares = []
     let impares = []
     for (let i = 0; i < 100; i++) {
@@ -43,7 +40,12 @@ function aleatorios(request, response) {
     for (i = 0; i < impares.length; i++) {
         if (impares[i] != undefined) response.write(" " + impares[i] + " ")
     }
+}
 
+function aleatorios(request, response) {
+    response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" })
+    response.write("<h2> Aleatórios </h2>")
+    separarAleatoriosParImpar(response)
     response.write("<br/><a href='index.html'>Voltar</a> \n")
     response.end()
 }
@@ -58,15 +60,7 @@ function ehPrimo(numero) {
     return false
 }
 
-function primos(request, response) {
-    response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" })
-    response.write("<h2> Primos </h2>")
-    response.write("<label>Insira os parâmetros pela URL</label><br/>")
-    let url = require('url')
-    let dados = url.parse(request.url, true).query
-    let numero1 = dados.numero1
-    let numero2 = dados.numero2
-
+function calcularPrimos(response, numero1, numero2) {
     if (numero1 < numero2 && numero2 < 100) {
         response.write("Intervalo de primos: ")
         while (numero1 <= numero2) {
@@ -76,21 +70,46 @@ function primos(request, response) {
             numero1++
         }
     } else response.write("Ausentes ou Inválidos")
+}
 
+function primos(request, response) {
+    response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" })
+    response.write("<h2> Primos </h2>")
+    response.write("<label>Insira os parâmetros pela URL</label><br/>")
+    let url = require('url')
+    let dados = url.parse(request.url, true).query
+    let numero1 = dados.numero1
+    let numero2 = dados.numero2
+    calcularPrimos(response, numero1, numero2)
     response.write("<br/><a href='index.html'>Voltar</a> \n")
     response.end()
+}
+
+function formularioEquacao(response) {
+    response.write("<form method=post>")
+    response.write("<label>Digite valor de A: </label><input type=text name=a><br/>")
+    response.write("<label>Digite valor de B: </label><input type=text name=b><br/>")
+    response.write("<label>Digite valor de C: </label><input type=text name=c><br/>")
+    response.write("<input type=submit />")
+    response.write("</form>")
+}
+
+function calcularEquacao(response, a, b, c) {
+    let delta = (b * b) - (4 * a * c)
+    if (delta >= 0) {
+        let raizDelta = Math.sqrt(delta)
+        let x1 = (-b + raizDelta) / (2 * a)
+        let x2 = (-b - raizDelta) / (2 * a)
+        response.write("<label>" + "Valor x¹ = " + x1.toFixed(2) + "</label><br/>")
+        response.write("<label>" + "Valor x² = " + x2.toFixed(2) + "</label>")
+    } else response.write("Ausentes ou Inválidos")
 }
 
 function equacao(request, response) {
     if (request.method == "GET") {
         response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" })
         response.write("<h2> Equação </h2>")
-        response.write("<form method=post>")
-        response.write("<label>Digite valor de A: </label><input type=text name=a><br/>")
-        response.write("<label>Digite valor de B: </label><input type=text name=b><br/>")
-        response.write("<label>Digite valor de C: </label><input type=text name=c><br/>")
-        response.write("<input type=submit />")
-        response.write("</form>")
+        formularioEquacao(response)
         response.write("<a href='index.html'>Voltar</a> \n")
         response.end()
     } else {
@@ -102,15 +121,7 @@ function equacao(request, response) {
             let a = parseFloat(dados.a)
             let b = parseFloat(dados.b)
             let c = parseFloat(dados.c)
-            let delta = (b * b) - (4 * a * c)
-
-            if (delta >= 0) {
-                let raizDelta = Math.sqrt(delta)
-                let x1 = (-b + raizDelta) / (2 * a)
-                let x2 = (-b - raizDelta) / (2 * a)
-                response.write("<label>" + "Valor x¹ = " + x1.toFixed(2) + "</label><br/>")
-                response.write("<label>" + "Valor x² = " + x2.toFixed(2) + "</label>")
-            } else response.write("Ausentes ou Inválidos")
+            calcularEquacao(response, a, b, c)
             response.end()
         })
     }
@@ -133,36 +144,38 @@ function formularioTabuleiro(response) {
     response.write("</form>")
 }
 
+function tabuleiro(response) {
+    response.write("<table>");
+    for (let i = 0; i < 8; i++) {
+        response.write("<tr>")
+        for (let j = 0; j < 8; j++) {
+            response.write("<td>")
+            if (i % 2 == 0) {
+                if (j % 2 == 0) {
+                    response.write("<div class=branco></div>")
+                } else {
+                    response.write("<div class=preto></div>")
+                }
+            } else {
+                if (j % 2 == 0) {
+                    response.write("<div class=preto></div>")
+                } else {
+                    response.write("<div class=branco></div>")
+                }
+            }
+            response.write("</td>")
+        }
+        response.write("</tr>")
+    }
+    response.write("</table>")
+}
+
 function xadrez(request, response) {
     if (request.method == "GET") {
         response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" })
-        cssTabuleiro(response);
-
-        response.write("<table>");
-        for (let i = 0; i < 8; i++) {
-            response.write("<tr>");
-            for (let j = 0; j < 8; j++) {
-                response.write("<td>");
-                if (i % 2 == 0) {
-                    if (j % 2 == 0) {
-                        response.write("<div class=branco></div>");
-                    } else {
-                        response.write("<div class=preto></div>");
-                    }
-                } else {
-                    if (j % 2 == 0) {
-                        response.write("<div class=preto></div>");
-                    } else {
-                        response.write("<div class=branco></div>");
-                    }
-                }
-                response.write("</td>");
-            }
-            response.write("</tr>");
-        }
-        response.write("</table>");
-
-        formularioTabuleiro(response);
+        cssTabuleiro(response)
+        tabuleiro(response)
+        formularioTabuleiro(response)
         response.write("<a href='index.html'>Voltar</a> \n")
         response.end()
     } else {
@@ -174,9 +187,6 @@ function xadrez(request, response) {
             let y = parseFloat(dados.y)
             console.log(x);
             console.log(y);
-
-
-
         })
     }
 }
