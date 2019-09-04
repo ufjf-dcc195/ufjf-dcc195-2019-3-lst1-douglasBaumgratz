@@ -130,9 +130,9 @@ function equacao(request, response) {
 function cssTabuleiro(response) {
     response.write("<h2>Xadrez</h2>")
     response.write("<style type='text/css'>");
-    response.write(" td{ line-height: 70px; text-align:center;}");
+    response.write(" td {line-height: 70px; text-align:center; font-size: 60px; }");
     response.write(".branco {width:70px; height:70px;}");
-    response.write(".preto {width:70px; height:70px; background-color: black; }  </style>");
+    response.write(".preto {width:70px; height:70px; background-color: gray;}</style>");
     response.write("</style>");
 }
 
@@ -152,15 +152,15 @@ function tabuleiro(response) {
             response.write("<td>")
             if (i % 2 == 0) {
                 if (j % 2 == 0) {
-                    response.write("<div class=branco></div>")
+                    response.write("<div class=branco>&#9816</div>")
                 } else {
-                    response.write("<div class=preto></div>")
+                    response.write("<div class=preto>&#9822</div>")
                 }
             } else {
                 if (j % 2 == 0) {
-                    response.write("<div class=preto></div>")
+                    response.write("<div class=preto>&#9822</div>")
                 } else {
-                    response.write("<div class=branco></div>")
+                    response.write("<div class=branco>&#9816</div>")
                 }
             }
             response.write("</td>")
