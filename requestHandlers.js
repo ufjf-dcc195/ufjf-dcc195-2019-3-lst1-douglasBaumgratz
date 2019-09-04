@@ -1,60 +1,54 @@
 var qs = require("querystring");
 
 function index(request, response) {
-    if (request.method == "GET") {
-        response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" })
-        response.write("<h1> Sistemas </h1>")
-        response.write("<ul><li><a href='aleatorios.html'>Aleatórios</a></li><br/>")
-        response.write("<li><a href='primos.html'>Primos</a></li><br/>")
-        response.write("<li><a href='equacao.html'>Equação</a></li><br/>")
-        response.write("<li><a href='xadrez.html'>Xadrez</a></li><br/>")
-        response.write("<li><a href='xadrez.json'>Xadrez JSON</a></li><br/>")
-        response.write("<li><a href='sobre.html'>Sobre</a></li></ul>")
-        response.end()
-    }
+    response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" })
+    response.write("<h1> Sistemas </h1>")
+    response.write("<ul><li><a href='aleatorios.html'>Aleatórios</a></li><br/>")
+    response.write("<li><a href='primos.html'>Primos</a></li><br/>")
+    response.write("<li><a href='equacao.html'>Equação</a></li><br/>")
+    response.write("<li><a href='xadrez.html'>Xadrez</a></li><br/>")
+    response.write("<li><a href='xadrez.json'>Xadrez JSON</a></li><br/>")
+    response.write("<li><a href='sobre.html'>Sobre</a></li></ul>")
+    response.end()
 }
 
 function sobre(request, response) {
-    if (request.method == "GET") {
-        response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" })
-        response.write("<h2> Sobre </h2>")
-        response.write("<label> Nome: Douglas Baumgratz de Carvalho </label><br/>")
-        response.write("<label> Número de Matrícula: 201276007 </label><br/>")
-        response.write("<label> Curso: Sistemas de Informação </label><br/>")
-        response.write("<a href='index.html'>Voltar</a> \n")
-        response.end()
-    }
+    response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" })
+    response.write("<h2> Sobre </h2>")
+    response.write("<label> Nome: Douglas Baumgratz de Carvalho </label><br/>")
+    response.write("<label> Número de Matrícula: 201276007 </label><br/>")
+    response.write("<label> Curso: Sistemas de Informação </label><br/>")
+    response.write("<a href='index.html'>Voltar</a> \n")
+    response.end()
 }
 
 function aleatorios(request, response) {
-    if (request.method == "GET") {
-        response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" })
-        response.write("<h2> Aleatórios </h2>")
+    response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" })
+    response.write("<h2> Aleatórios </h2>")
 
-        let pares = [];
-        let impares = [];
+    let pares = [];
+    let impares = [];
 
-        for (let i = 0; i < 100; i++) {
-            let numero = Math.floor(Math.random() * 1000) + 1
-            if (numero % 2 == 0) {
-                pares[i] = numero
-            } else {
-                impares[i] = numero
-            }
+    for (let i = 0; i < 100; i++) {
+        let numero = Math.floor(Math.random() * 1000) + 1
+        if (numero % 2 == 0) {
+            pares[i] = numero
+        } else {
+            impares[i] = numero
         }
-
-        response.write("Pares: ")
-        for (i = 0; i < pares.length; i++) {
-            if (pares[i] != undefined) response.write(" " + pares[i] + " ")
-        }
-        response.write("<br/>Ímpares: ")
-        for (i = 0; i < impares.length; i++) {
-            if (impares[i] != undefined) response.write(" " + impares[i] + " ")
-        }
-
-        response.write("<br/><a href='index.html'>Voltar</a> \n")
-        response.end()
     }
+
+    response.write("Pares: ")
+    for (i = 0; i < pares.length; i++) {
+        if (pares[i] != undefined) response.write(" " + pares[i] + " ")
+    }
+    response.write("<br/>Ímpares: ")
+    for (i = 0; i < impares.length; i++) {
+        if (impares[i] != undefined) response.write(" " + impares[i] + " ")
+    }
+
+    response.write("<br/><a href='index.html'>Voltar</a> \n")
+    response.end()
 }
 
 function ehPrimo(numero) {
@@ -68,35 +62,31 @@ function ehPrimo(numero) {
 }
 
 function primos(request, response) {
-    if (request.method == "GET") {
-        response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" })
-        response.write("<h2> Primos </h2>")
-        response.write("<label>Insira os parâmetros pela URL</label><br/>")
-        let url = require('url')
-        let dados = url.parse(request.url, true).query
-        let numero1 = dados.numero1
-        let numero2 = dados.numero2
+    response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" })
+    response.write("<h2> Primos </h2>")
+    response.write("<label>Insira os parâmetros pela URL</label><br/>")
+    let url = require('url')
+    let dados = url.parse(request.url, true).query
+    let numero1 = dados.numero1
+    let numero2 = dados.numero2
 
-        if (numero1 < numero2 && numero2 < 100) {
-            response.write("Intervalo de primos: ")
-            while (numero1 <= numero2) {
-                if (ehPrimo(numero1)) {
-                    response.write(" " + numero1 + " ")
-                }
-                numero1++
+    if (numero1 < numero2 && numero2 < 100) {
+        response.write("Intervalo de primos: ")
+        while (numero1 <= numero2) {
+            if (ehPrimo(numero1)) {
+                response.write(" " + numero1 + " ")
             }
-        } else {
-            response.write("Ausente ou Inválidos")
+            numero1++
         }
-
-        response.write("<br/><a href='index.html'>Voltar</a> \n")
-        response.end()
+    } else {
+        response.write("Ausente ou Inválidos")
     }
+
+    response.write("<br/><a href='index.html'>Voltar</a> \n")
+    response.end()
 }
 
-
 function equacao(request, response) {
-
     if (request.method == "GET") {
         response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" })
         response.write("<h2> Equação </h2>");
@@ -132,7 +122,6 @@ function equacao(request, response) {
             response.end()
         })
     }
-
 }
 
 function xadrez(request, response) {
