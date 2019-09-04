@@ -31,7 +31,29 @@ function aleatorios(request, response) {
     if (request.method == "GET") {
         response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" })
         response.write("<h2> Aleatórios </h2>")
-        response.write("<a href='index.html'>Voltar</a> \n")
+
+        let pares = [];
+        let impares = [];
+
+        for (let i = 0; i < 100; i++) {
+            let numero = Math.floor(Math.random() * 1000) + 1
+            if (numero % 2 == 0) {
+                pares[i] = numero
+            } else {
+                impares[i] = numero
+            }
+        }
+
+        response.write("Pares: ")
+        for (i = 0; i < pares.length; i++) {
+            if (pares[i] != undefined) response.write(" " + pares[i] + " ")
+        }
+        response.write("<br/>Ímpares: ")
+        for (i = 0; i < impares.length; i++) {
+            if (impares[i] != undefined) response.write(" " + impares[i] + " ")
+        }
+
+        response.write("<br/><a href='index.html'>Voltar</a> \n")
         response.end()
     }
 }
