@@ -17,7 +17,10 @@ function index(request, response) {
 function sobre(request, response) {
     if (request.method == "GET") {
         response.writeHead(200, { "Content-Type": "text/html" });
-        response.write("<h3> Sobre </h3>");
+        response.write("<h3> Sobre </h3>");        
+        response.write("<label> Nome: Douglas Baumgratz de Carvalho </label><br/>");
+        response.write("<label> Número de matrícula: 201276007 </label><br/>");
+        response.write("<label> Curso: Sistemas de Informação </label><br/>");
         response.write("<a href='index.html'>Voltar</a> \n");
         response.end();
     }
