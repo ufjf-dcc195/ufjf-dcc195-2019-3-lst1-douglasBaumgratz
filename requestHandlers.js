@@ -29,12 +29,9 @@ function aleatorios(request, response) {
     let pares = []
     let impares = []
     for (let i = 0; i < 100; i++) {
-        let numero = Math.floor(Math.random() * 1000)
-        if (numero % 2 == 0) {
-            pares[i] = numero
-        } else {
-            impares[i] = numero
-        }
+        let numero = Math.floor(Math.random() * 100)
+        if (numero % 2 == 0) pares[i] = numero
+        else impares[i] = numero
     }
 
     response.write("Pares: ")
@@ -123,6 +120,13 @@ function xadrez(request, response) {
     if (request.method == "GET") {
         response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" })
         response.write("<h2> Xadrez </h2>")
+        response.write("<form method=post>")
+        response.write("<label>Linha: </label><input type=number name=x><br/>")
+        response.write("<label>Coluna: </label><input type=number name=y><br/>")        
+        response.write("<input type=submit />")
+        response.write("</form>")
+
+        response.write("Tabuleiro <br/>")
 
         response.write("<a href='index.html'>Voltar</a> \n")
         response.end()
