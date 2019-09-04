@@ -89,9 +89,9 @@ function equacao(request, response) {
         response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" })
         response.write("<h2> Equação </h2>");
         response.write("<form method=post>")
-        response.write("<label>Digite valor de A: </label><input type=number name=a><br/>")
-        response.write("<label>Digite valor de B: </label><input type=number name=b><br/>")
-        response.write("<label>Digite valor de C: </label><input type=number name=c><br/>")
+        response.write("<label>Digite valor de A: </label><input type=text name=a><br/>")
+        response.write("<label>Digite valor de B: </label><input type=text name=b><br/>")
+        response.write("<label>Digite valor de C: </label><input type=text name=c><br/>")
         response.write("<input type=submit />")
         response.write("</form>")
         response.write("<a href='index.html'>Voltar</a> \n");
