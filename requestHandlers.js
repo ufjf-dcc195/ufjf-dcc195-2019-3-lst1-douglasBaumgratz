@@ -191,10 +191,18 @@ function xadrez(request, response) {
     }
 }
 
+function xadrezJson(request, response){
+    response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" })
+    response.write("<h2>Xadrez JSON</h2>")
+    response.write("<a href='index.html'>Voltar</a> \n")
+    response.end()
+}
+
 exports.index = index
 exports.sobre = sobre
 exports.aleatorios = aleatorios
 exports.primos = primos
 exports.equacao = equacao
 exports.xadrez = xadrez
+exports.xadrezJson = xadrezJson
 

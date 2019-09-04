@@ -10,6 +10,6 @@ handlers["/aleatorios.html"] = requestHandlers.aleatorios
 handlers["/primos.html"] = requestHandlers.primos
 handlers["/equacao.html"] = requestHandlers.equacao
 handlers["/xadrez.html"] = requestHandlers.xadrez
-handlers["/xadrez.json"] = requestHandlers.xadrez
+handlers["/xadrez.json"] = requestHandlers.xadrezJson
 
 server.start(router.route, handlers)
