@@ -94,7 +94,7 @@ function equacao(request, response) {
         response.write("<a href='index.html'>Voltar</a> \n")
         response.end()
     } else {
-        body = ''
+        let body = ''
         request.on('data', function (data) { body += data })
         request.on('end', function () {
             response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" })
@@ -116,32 +116,44 @@ function equacao(request, response) {
     }
 }
 
+function cssTabuleiro(response) {
+    response.write("<h2>Xadrez</h2>")
+    response.write("<style type='text/css'>");
+    response.write(" td{ line-height: 70px; text-align:center;}");
+    response.write(".branco {width:70px; height:70px;}");
+    response.write(".preto {width:70px; height:70px; background-color: black; }  </style>");
+    response.write("</style>");
+}
+
+function formularioTabuleiro(response) {
+    response.write("<form method=post>")
+    response.write("<br/><label>Linha: </label><input type=number name=x><br/>")
+    response.write("<label>Coluna: </label><input type=number name=y><br/>")
+    response.write("<input type=submit />")
+    response.write("</form>")
+}
+
 function xadrez(request, response) {
     if (request.method == "GET") {
         response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" })
-        response.write("<h2>Xadrez</h2>")
-        response.write("<style type='text/css'>");
-        response.write(" td{ line-height: 70px; text-align:center;}");
-        response.write(".impar {width:70px; height:70px;}");
-        response.write(".par {width:70px; height:70px; background-color: black; }  </style>");
-        response.write("</style>");
+        cssTabuleiro(response);
 
         response.write("<table>");
-        for (var i = 1; i <= 8; i++) {
+        for (let i = 0; i < 8; i++) {
             response.write("<tr>");
-            for (var j = 0; j < 8; j++) {
+            for (let j = 0; j < 8; j++) {
                 response.write("<td>");
                 if (i % 2 == 0) {
                     if (j % 2 == 0) {
-                        response.write("<div class=par></div>");
+                        response.write("<div class=branco></div>");
                     } else {
-                        response.write("<div class=impar></div>");
+                        response.write("<div class=preto></div>");
                     }
                 } else {
                     if (j % 2 == 0) {
-                        response.write("<div class=impar></div>");
+                        response.write("<div class=preto></div>");
                     } else {
-                        response.write("<div class=par></div>");
+                        response.write("<div class=branco></div>");
                     }
                 }
                 response.write("</td>");
@@ -150,13 +162,22 @@ function xadrez(request, response) {
         }
         response.write("</table>");
 
-        response.write("<form method=post>")
-        response.write("<br/><label>Linha: </label><input type=number name=x><br/>")
-        response.write("<label>Coluna: </label><input type=number name=y><br/>")
-        response.write("<input type=submit />")
-        response.write("</form>")
+        formularioTabuleiro(response);
         response.write("<a href='index.html'>Voltar</a> \n")
         response.end()
+    } else {
+        let body = ''
+        request.on('data', function (data) { body += data })
+        request.on('end', function () {
+            let dados = qs.parse(body)
+            let x = parseFloat(dados.x)
+            let y = parseFloat(dados.y)
+            console.log(x);
+            console.log(y);
+
+
+
+        })
     }
 }
 
