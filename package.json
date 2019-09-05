@@ -14,5 +14,9 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/ufjf-dcc195/ufjf-dcc195-2019-3-lst1-douglasBaumgratz/issues"
+  },
+  "homepage": "https://github.com/ufjf-dcc195/ufjf-dcc195-2019-3-lst1-douglasBaumgratz#readme"
 }
