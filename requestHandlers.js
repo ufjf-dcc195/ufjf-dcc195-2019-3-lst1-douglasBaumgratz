@@ -16,7 +16,7 @@ function sobre(request, response) {
     response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" })
     response.write("<h2> Sobre </h2>")
     response.write("<label> Nome: Douglas Baumgratz de Carvalho </label><br/>")
-    response.write("<label> Número de Matrícula: 201276007 </label><br/>")
+    response.write("<label> Matrícula: 201276007 </label><br/>")
     response.write("<label> Curso: Sistemas de Informação </label><br/>")
     response.write("<a href='index.html'>Voltar</a> \n")
     response.end()
@@ -144,23 +144,39 @@ function formularioTabuleiro(response) {
     response.write("</form>")
 }
 
-function tabuleiro(response) {
+function tabuleiro(tabuleiro, response) {
     response.write("<table>");
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < tabuleiro.length; i++) {
         response.write("<tr>")
-        for (let j = 0; j < 8; j++) {
+        for (let j = 0; j < tabuleiro.length; j++) {
             response.write("<td>")
             if (i % 2 == 0) {
                 if (j % 2 == 0) {
-                    response.write("<div class=branco>&#9816</div>")
+                    if (tabuleiro[i][j] == 1) {
+                        response.write("<div class=branco>&#9816</div>")
+                    } else {
+                        response.write("<div class=branco></div>")
+                    }
                 } else {
-                    response.write("<div class=preto>&#9822</div>")
+                    if (tabuleiro[i][j] == 1) {
+                        response.write("<div class=preto>&#9822</div>")
+                    } else {
+                        response.write("<div class=preto></div>")
+                    }
                 }
             } else {
                 if (j % 2 == 0) {
-                    response.write("<div class=preto>&#9822</div>")
+                    if (tabuleiro[i][j] == 1) {
+                        response.write("<div class=preto>&#9822</div>")
+                    } else {
+                        response.write("<div class=preto></div>")
+                    }
                 } else {
-                    response.write("<div class=branco>&#9816</div>")
+                    if (tabuleiro[i][j] == 1) {
+                        response.write("<div class=branco>&#9816</div>")
+                    } else {
+                        response.write("<div class=branco></div>")
+                    }
                 }
             }
             response.write("</td>")
@@ -170,11 +186,29 @@ function tabuleiro(response) {
     response.write("</table>")
 }
 
+function matrizSimples() {
+    let matriz = [];
+    for (let i = 0; i < 8; i++) {
+        matriz[i] = [];
+        for (let j = 0; j < 8; j++) {
+            matriz[i][j] = 0;
+        }
+    }
+    return matriz
+}
+
+function matrizTabuleiro(x, y) {
+    let matriz = matrizSimples()
+    matriz[x][y] = 1
+    return matriz
+}
+
 function xadrez(request, response) {
+    let matriz = matrizSimples()
     if (request.method == "GET") {
         response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" })
         cssTabuleiro(response)
-        tabuleiro(response)
+        tabuleiro(matriz, response)
         formularioTabuleiro(response)
         response.write("<a href='index.html'>Voltar</a> \n")
         response.end()
@@ -185,13 +219,26 @@ function xadrez(request, response) {
             let dados = qs.parse(body)
             let x = parseFloat(dados.x)
             let y = parseFloat(dados.y)
-            console.log(x);
-            console.log(y);
+
+            if (!isNaN(x) && !isNaN(y)) {
+                let matriz = []
+                matriz = matrizTabuleiro(x, y)
+                response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" })
+                cssTabuleiro(response)
+                tabuleiro(matriz, response)
+                response.write("<a href='xadrez.html'>Voltar</a> \n")
+                response.end()
+            } else {
+                response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" })
+                response.write("Dados ausentes ou inválidos \n")
+                response.write("<a href='xadrez.html'>Voltar</a> \n")
+                response.end()
+            }
         })
     }
 }
 
-function xadrezJson(request, response){
+function xadrezJson(request, response) {
     response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" })
     response.write("<h2>Xadrez JSON</h2>")
     response.write("<a href='index.html'>Voltar</a> \n")
