@@ -6,6 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ufjf-dcc195/ufjf-dcc195-2019-3-lst1-douglasBaumgratz.git"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
