@@ -158,14 +158,14 @@ function matrizSimples() {
 function matrizTabuleiro(x, y) {
     let matriz = matrizSimples()
     matriz[x][y] = 1
-    matriz[x - 2][y - 1] = 2
-    matriz[x - 2][y + 1] = 2
-    matriz[x - 1][y + 2] = 2
-    matriz[x + 1][y + 2] = 2
-    matriz[x + 2][y + 1] = 2
-    matriz[x + 2][y - 1] = 2
-    matriz[x - 1][y - 2] = 2
-    matriz[x + 1][y - 2] = 2
+    if (x - 2 >= 0 && y - 1 >= 0) { matriz[x - 2][y - 1] = 2 }
+    if (x - 2 >= 0 && y + 1 < 8) matriz[x - 2][y + 1] = 2
+    if (x - 1 >= 0 && y + 2 < 8) matriz[x - 1][y + 2] = 2
+    if (x + 1 < 8 && y + 2 < 8) matriz[x + 1][y + 2] = 2
+    if (x + 2 < 8 && y + 1 < 8) matriz[x + 2][y + 1] = 2
+    if (x + 2 < 8 && y - 1 >= 0) matriz[x + 2][y - 1] = 2
+    if (x - 1 >= 0 && y - 2 >= 0) matriz[x - 1][y - 2] = 2
+    if (x + 1 < 8 && y - 2 >= 0) matriz[x + 1][y - 2] = 2
     return matriz
 }
 
@@ -263,10 +263,39 @@ function xadrez(request, response) {
 }
 
 function xadrezJson(request, response) {
-    response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" })
-    response.write("<h2>Xadrez JSON</h2>")
-    response.write("<a href='index.html'>Voltar</a> \n")
-    response.end()
+    let matriz = matrizSimples()
+    if (request.method == "GET") {
+        response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" })
+        cssTabuleiro(response)
+        tabuleiro(matriz, response)
+        formularioTabuleiro(response)
+        response.write("<a href='index.html'>Voltar</a> \n")
+        response.end()
+    } else {
+        let body = ''
+        request.on('data', function (data) { body += data })
+        request.on('end', function () {
+            let dados = qs.parse(body)
+            
+            let x = parseFloat(dados.x)
+            let y = parseFloat(dados.y)
+
+            if (!isNaN(x) && !isNaN(y)) {
+                let matriz = []
+                matriz = matrizTabuleiro(x, y)
+                response.writeHead(200, { "Content-Type":"application/json" })
+                JSON.stringify(cssTabuleiro(response))
+                JSON.stringify(tabuleiro(matriz, response))
+                response.write("<a href='xadrez.html'>Voltar</a> \n")
+                response.end()
+            } else {
+                response.writeHead(200, { "Content-Type":"application/json"})
+                response.write("Dados ausentes ou inválidos \n")
+                response.write("<a href='xadrez.html'>Voltar</a> \n")
+                response.end()
+            }
+        })
+    }
 }
 
 exports.index = index
