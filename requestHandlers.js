@@ -144,48 +144,6 @@ function formularioTabuleiro(response) {
     response.write("</form>")
 }
 
-function tabuleiro(tabuleiro, response) {
-    response.write("<table>");
-    for (let i = 0; i < tabuleiro.length; i++) {
-        response.write("<tr>")
-        for (let j = 0; j < tabuleiro.length; j++) {
-            response.write("<td>")
-            if (i % 2 == 0) {
-                if (j % 2 == 0) {
-                    if (tabuleiro[i][j] == 1) {
-                        response.write("<div class=branco>&#9816</div>")
-                    } else {
-                        response.write("<div class=branco></div>")
-                    }
-                } else {
-                    if (tabuleiro[i][j] == 1) {
-                        response.write("<div class=preto>&#9822</div>")
-                    } else {
-                        response.write("<div class=preto></div>")
-                    }
-                }
-            } else {
-                if (j % 2 == 0) {
-                    if (tabuleiro[i][j] == 1) {
-                        response.write("<div class=preto>&#9822</div>")
-                    } else {
-                        response.write("<div class=preto></div>")
-                    }
-                } else {
-                    if (tabuleiro[i][j] == 1) {
-                        response.write("<div class=branco>&#9816</div>")
-                    } else {
-                        response.write("<div class=branco></div>")
-                    }
-                }
-            }
-            response.write("</td>")
-        }
-        response.write("</tr>")
-    }
-    response.write("</table>")
-}
-
 function matrizSimples() {
     let matriz = [];
     for (let i = 0; i < 8; i++) {
@@ -200,7 +158,73 @@ function matrizSimples() {
 function matrizTabuleiro(x, y) {
     let matriz = matrizSimples()
     matriz[x][y] = 1
+    matriz[x - 2][y - 1] = 2
+    matriz[x - 2][y + 1] = 2
+    matriz[x - 1][y + 2] = 2
+    matriz[x + 1][y + 2] = 2
+    matriz[x + 2][y + 1] = 2
+    matriz[x + 2][y - 1] = 2
+    matriz[x - 1][y - 2] = 2
+    matriz[x + 1][y - 2] = 2
     return matriz
+}
+
+function tabuleiro(tabuleiro, response) {
+    response.write("<table>");
+    for (let i = 0; i < tabuleiro.length; i++) {
+        response.write("<tr>")
+        for (let j = 0; j < tabuleiro.length; j++) {
+            response.write("<td>")
+            if (i % 2 == 0) {
+                if (j % 2 == 0) {
+                    if (tabuleiro[i][j] == 1) {
+                        response.write("<div class=branco>&#9816</div>")
+                    }
+                    else if (tabuleiro[i][j] == 2) {
+                        response.write("<div class=branco>&#9816</div>")
+                    }
+                    else {
+                        response.write("<div class=branco></div>")
+                    }
+                } else {
+                    if (tabuleiro[i][j] == 1) {
+                        response.write("<div class=preto>&#9822</div>")
+                    }
+                    else if (tabuleiro[i][j] == 2) {
+                        response.write("<div class=preto>&#9822</div>")
+                    }
+                    else {
+                        response.write("<div class=preto></div>")
+                    }
+                }
+            } else {
+                if (j % 2 == 0) {
+                    if (tabuleiro[i][j] == 1) {
+                        response.write("<div class=preto>&#9822</div>")
+                    }
+                    else if (tabuleiro[i][j] == 2) {
+                        response.write("<div class=preto>&#9822</div>")
+                    }
+                    else {
+                        response.write("<div class=preto></div>")
+                    }
+                } else {
+                    if (tabuleiro[i][j] == 1) {
+                        response.write("<div class=branco>&#9816</div>")
+                    }
+                    else if (tabuleiro[i][j] == 2) {
+                        response.write("<div class=branco>&#9816</div>")
+                    }
+                    else {
+                        response.write("<div class=branco></div>")
+                    }
+                }
+            }
+            response.write("</td>")
+        }
+        response.write("</tr>")
+    }
+    response.write("</table>")
 }
 
 function xadrez(request, response) {
