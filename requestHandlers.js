@@ -16,6 +16,7 @@ function sobre(request, response) {
     response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" })
     response.write("<h2> Sobre </h2>")
     response.write("<label> Nome: Douglas Baumgratz de Carvalho </label><br/>")
+    response.write("<label> E-mail: douglas.baumgratz@gmail.com </label><br/>")
     response.write("<label> Matrícula: 201276007 </label><br/>")
     response.write("<label> Curso: Sistemas de Informação </label><br/>")
     response.write("<a href='index.html'>Voltar</a> \n")

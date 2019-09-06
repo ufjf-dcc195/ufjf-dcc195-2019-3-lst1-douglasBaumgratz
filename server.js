@@ -11,7 +11,7 @@ function start(route, handlers) {
             response
         )
     }
-    http.createServer(onRequest).listen(process.env.PORT)
+    http.createServer(onRequest).listen(process.env.PORT||8888)
     console.log("Servidor iniciado em localhost:8888")
 }
 exports.start = start
