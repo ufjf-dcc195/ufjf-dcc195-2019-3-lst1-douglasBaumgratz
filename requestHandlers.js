@@ -181,7 +181,7 @@ function tabuleiro(tabuleiro, response) {
                         response.write("<div class=branco>&#9816</div>")
                     }
                     else if (tabuleiro[i][j] == 2) {
-                        response.write("<div class=branco>&#9816</div>")
+                        response.write("<div class=branco>&#9822</div>")
                     }
                     else {
                         response.write("<div class=branco></div>")
@@ -191,7 +191,7 @@ function tabuleiro(tabuleiro, response) {
                         response.write("<div class=preto>&#9822</div>")
                     }
                     else if (tabuleiro[i][j] == 2) {
-                        response.write("<div class=preto>&#9822</div>")
+                        response.write("<div class=preto>&#9816</div>")
                     }
                     else {
                         response.write("<div class=preto></div>")
@@ -203,7 +203,7 @@ function tabuleiro(tabuleiro, response) {
                         response.write("<div class=preto>&#9822</div>")
                     }
                     else if (tabuleiro[i][j] == 2) {
-                        response.write("<div class=preto>&#9822</div>")
+                        response.write("<div class=preto>&#9816</div>")
                     }
                     else {
                         response.write("<div class=preto></div>")
@@ -213,7 +213,7 @@ function tabuleiro(tabuleiro, response) {
                         response.write("<div class=branco>&#9816</div>")
                     }
                     else if (tabuleiro[i][j] == 2) {
-                        response.write("<div class=branco>&#9816</div>")
+                        response.write("<div class=branco>&#9822</div>")
                     }
                     else {
                         response.write("<div class=branco></div>")
@@ -276,20 +276,20 @@ function xadrezJson(request, response) {
         request.on('data', function (data) { body += data })
         request.on('end', function () {
             let dados = qs.parse(body)
-            
+
             let x = parseFloat(dados.x)
             let y = parseFloat(dados.y)
 
             if (!isNaN(x) && !isNaN(y)) {
                 let matriz = []
                 matriz = matrizTabuleiro(x, y)
-                response.writeHead(200, { "Content-Type":"application/json" })
+                response.writeHead(200, { "Content-Type": "application/json" })
                 JSON.stringify(cssTabuleiro(response))
                 JSON.stringify(tabuleiro(matriz, response))
                 response.write("<a href='xadrez.html'>Voltar</a> \n")
                 response.end()
             } else {
-                response.writeHead(200, { "Content-Type":"application/json"})
+                response.writeHead(200, { "Content-Type": "application/json" })
                 response.write("Dados ausentes ou inválidos \n")
                 response.write("<a href='xadrez.html'>Voltar</a> \n")
                 response.end()
