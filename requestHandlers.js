@@ -158,7 +158,7 @@ function matrizSimples() {
 function matrizTabuleiro(x, y) {
     let matriz = matrizSimples()
     matriz[x][y] = 1
-    if (x - 2 >= 0 && y - 1 >= 0) { matriz[x - 2][y - 1] = 2 }
+    if (x - 2 >= 0 && y - 1 >= 0)  matriz[x - 2][y - 1] = 2 
     if (x - 2 >= 0 && y + 1 < 8) matriz[x - 2][y + 1] = 2
     if (x - 1 >= 0 && y + 2 < 8) matriz[x - 1][y + 2] = 2
     if (x + 1 < 8 && y + 2 < 8) matriz[x + 1][y + 2] = 2
