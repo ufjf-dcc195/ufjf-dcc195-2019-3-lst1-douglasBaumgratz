@@ -2,7 +2,7 @@ var qs = require("querystring")
 
 function index(request, response) {
     response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" })
-    response.write("<h1> Sistemas </h1>")
+    response.write("<h1> Opções </h1>")
     response.write("<ul><li><a href='aleatorios.html'>Aleatórios</a></li><br/>")
     response.write("<li><a href='primos.html'>Primos</a></li><br/>")
     response.write("<li><a href='equacao.html'>Equação</a></li><br/>")
@@ -285,8 +285,8 @@ function xadrezJson(request, response) {
                 let matriz = []
                 matriz = matrizTabuleiro(x, y)
                 response.writeHead(200, { "Content-Type": "application/json" })
-                JSON.stringify(cssTabuleiro(response))
-                JSON.stringify(tabuleiro(matriz, response))
+                response.write(JSON.stringify(cssTabuleiro(response)))
+                response.write(JSON.stringify(tabuleiro(matriz, response)))
                 response.write("<a href='xadrez.html'>Voltar</a> \n")
                 response.end()
             } else {
